@@ -1,54 +1,40 @@
 package org.getspout.client.renderer.util;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
+import org.getspout.api.math.Matrix;
+import org.getspout.api.math.Vector3;
+
+
 
 public class MatrixUtils {
 	
-	public static Matrix4f createLookAt(Vector3f center, Vector3f at, Vector3f up){
-		Vector3f f = new Vector3f();
-		Vector3f.sub(center, at, f);
-		f = (Vector3f) f.normalise();
+	public static Matrix createLookAt(Vector3 center, Vector3 at, Vector3 up){
+		Vector3 f = center.subtract(at).normalize();
+		up = up.normalize();
 		
-		up = (Vector3f) up.normalise();
-		
-		Vector3f s = new Vector3f();
-		Vector3f u = new Vector3f();
-		
-		Vector3f.cross(f, up, s);
-		Vector3f.cross(s, f, u);
-		
+		Vector3 s = f.cross(up);
+		Vector3 u = s.cross(f);
 
 		
-		Matrix4f mat = new Matrix4f();
-		mat.setIdentity();
-		mat.m00 = s.x;
-		mat.m01 = s.y;
-		mat.m02 = s.z;
-		mat.m03 = 0;
+		Matrix mat = new Matrix(4);
+
+		mat.set(0, 0, s.getX());
+		mat.set(0, 1, s.getY());
+		mat.set(0, 2, s.getZ());
 		
-		mat.m10 = u.x;
-		mat.m11 = u.y;
-		mat.m12 = u.z;
-		mat.m13 = 0;
+		mat.set(1, 0, u.getX());
+		mat.set(1, 1, u.getY());
+		mat.set(1,2, u.getZ());
 		
-		mat.m20 = -f.x;
-		mat.m21 = -f.y;
-		mat.m22 = -f.z;
-		mat.m23 = 0;
+		mat.set(2, 0, -f.getX());
+		mat.set(2, 1, -f.getY());
+		mat.set(2, 2, -f.getZ());
+	
+		mat = mat.multiply(Matrix.translate(center));
 		
-		mat.translate(center);
-		
-		return mat;
-		
-		
-		
-		
-		
-		
+		return mat;		
 	}
 	
-	public static Matrix4f createPerspective(float fov, float aspect, float znear, float zfar) {
+	public static Matrix createPerspective(float fov, float aspect, float znear, float zfar) {
 
 		float ymax, xmax;
 		float temp, temp2, temp3, temp4;
@@ -62,33 +48,31 @@ public class MatrixUtils {
 		temp3 = ymax - -ymax;
 		temp4 = zfar - znear;
 
-		Matrix4f matrix = new Matrix4f();
-		matrix.setIdentity();
-		matrix.m00 = temp / temp2;
-		matrix.m11 = temp / temp3;
-		matrix.m20 = (xmax + -xmax) / temp2;
-		matrix.m21 = (ymax + -ymax) / temp3;
-		matrix.m22 = (-zfar - znear) / temp4;
-		matrix.m23 = -1;
-		matrix.m32 = (-temp * zfar) / temp4;
-
+		Matrix matrix = new Matrix();
+		matrix.set(0, 0, temp / temp2);
+		matrix.set(1, 1, temp / temp3);
+		matrix.set(2, 0, (xmax + -xmax) / temp2);
+		matrix.set(2, 1, (ymax + -ymax) / temp3);
+		matrix.set(2, 2, (-zfar - znear) / temp4);
+		matrix.set(2, 3, -1);
+		matrix.set(3, 2, (-temp * zfar) / temp4);
+		
 		return matrix;
 	}
 	
-	public static Matrix4f createOrthographic(float right, float left, float top, float bottom, float near, float far){
-		Matrix4f ortho = new Matrix4f();
+	public static Matrix createOrthographic(float right, float left, float top, float bottom, float near, float far){
+		Matrix ortho = new Matrix();
 		float tx = -((right+left) / (right-left));
 		float ty = -((top + bottom) / (top - bottom));
 		float tz = -((far+near) / (far - near));
-		
-		ortho.setIdentity();
-		ortho.m00 = 2.0f / (right-left);
-		ortho.m11 = 2.0f / (top-bottom);
-		ortho.m22 = -2.0f/ (far-near);
-		
-		ortho.m30 = tx;
-		ortho.m31 = ty;
-		ortho.m32 = tz;
+
+		ortho.set(0, 0, 2.0f / (right-left));
+		ortho.set(1, 1, 2.0f / (top-bottom));
+		ortho.set(2, 2, -2.0f/ (far-near));
+
+		ortho.set(3, 0, tx);
+		ortho.set(3, 1, ty);
+		ortho.set(3, 2, tz);
 		
 		return ortho;
 		
