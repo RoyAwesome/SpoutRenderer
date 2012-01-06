@@ -3,13 +3,13 @@ package org.getspout.client.renderer.shader;
 import java.io.FileNotFoundException;
 import java.nio.FloatBuffer;
 
+import org.getspout.api.math.Matrix;
+import org.getspout.client.renderer.shader.variables.Mat4ShaderVariable;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-import org.royawesome.renderer.shader.variables.Mat4ShaderVariable;
 
 public class BasicShader extends Shader {
-	
+	FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(4*4);
 	
 	public BasicShader() {
 		super(null, null);
@@ -22,37 +22,37 @@ public class BasicShader extends Shader {
 		
 		if(compatabilityMode){
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
-			FloatBuffer buff = BufferUtils.createFloatBuffer(4*4);
-			getProjectionMatrix().store(buff);
-			buff.flip();
+			matrixBuffer.position(0);
+			matrixBuffer.put(getProjectionMatrix().toArray());
+			matrixBuffer.flip();
 			
-			GL11.glLoadMatrix(buff);
+			GL11.glLoadMatrix(matrixBuffer);
 			
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
-			buff = BufferUtils.createFloatBuffer(4*4);
-			getViewMatrix().store(buff);
-			buff.flip();
+			matrixBuffer.position(0);
+			matrixBuffer.put(getViewMatrix().toArray());
+			matrixBuffer.flip();
 			
-			GL11.glLoadMatrix(buff);
+			GL11.glLoadMatrix(matrixBuffer);
 			
 		}
 		
 	}
 	
-	public void setViewMatrix(Matrix4f mat){
+	public void setViewMatrix(Matrix mat){
 		SetUniform("View", mat);
 	}
 	
-	public Matrix4f getViewMatrix()	{
+	public Matrix getViewMatrix()	{
 		return ((Mat4ShaderVariable)variables.get("View")).get();
 		
 	}
-	public Matrix4f getProjectionMatrix()	{
+	public Matrix getProjectionMatrix()	{
 		return ((Mat4ShaderVariable)variables.get("Projection")).get();		
 	}
 	
 	
-	public void setProjectionMatrix(Matrix4f mat){
+	public void setProjectionMatrix(Matrix mat){
 		SetUniform("Projection", mat);
 	}
 }

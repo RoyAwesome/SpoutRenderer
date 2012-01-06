@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import gnu.trove.list.array.*;
 
 
-import org.lwjgl.util.vector.*;
+import org.getspout.api.math.Vector2;
+import org.getspout.api.math.Vector3;
+import org.getspout.api.math.Vector4;
+import org.getspout.client.renderer.shader.EmptyShader;
+import org.getspout.client.renderer.shader.Shader;
 import org.newdawn.slick.opengl.Texture;
-import org.royawesome.renderer.shader.EmptyShader;
-import org.royawesome.renderer.shader.Shader;
 
 
 /**
@@ -158,14 +160,14 @@ public abstract class BatchVertexRenderer {
 		AddVertex(x,y,0.0f,1.0f);
 	}
 	
-	public void AddVertex(Vector3f vertex){
-		AddVertex(vertex.x, vertex.y, vertex.z);
+	public void AddVertex(Vector3 vertex){
+		AddVertex(vertex.getX(), vertex.getY(), vertex.getZ());
 	}
-	public void AddVertex(Vector2f vertex){
-		AddVertex(vertex.x, vertex.y);
+	public void AddVertex(Vector2 vertex){
+		AddVertex(vertex.getX(), vertex.getY());
 	}
-	public void AddVertex(Vector4f vertex){
-		AddVertex(vertex.x, vertex.y, vertex.z, vertex.w);
+	public void AddVertex(Vector4 vertex){
+		AddVertex(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getZ());
 	}
 	
 	public void AddColor(float r, float g, float b){
@@ -188,11 +190,11 @@ public abstract class BatchVertexRenderer {
 		AddNormal(x,y,z,1.0f);
 	}
 
-	public void AddNormal(Vector3f vertex){
-		AddVertex(vertex.x, vertex.y, vertex.z);
+	public void AddNormal(Vector3 vertex){
+		AddNormal(vertex.getX(), vertex.getY(), vertex.getZ());
 	}
-	public void AddNormal(Vector4f vertex){
-		AddVertex(vertex.x, vertex.y, vertex.z, vertex.w);
+	public void AddNormal(Vector4 vertex){
+		AddNormal(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getZ());
 	}
 	
 	public void AddTexCoord(float u, float v){
