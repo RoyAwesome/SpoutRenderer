@@ -173,7 +173,7 @@ public class Shader {
 								  "uniform mat4 Projection; \n"+
 								  "uniform mat4 View; \n" +
 								  "void main() \n" +
-								  "{\n    gl_Position = Projection * View *vPosition; \n" +
+								  "{\n    gl_Position = Projection * View * vPosition; \n" +
 								  "	uvcoord = vTexCoord; \n" +
 								  "color = vColor; \n"+
 								  "} \n";
@@ -182,7 +182,7 @@ public class Shader {
 									"varying vec2 uvcoord; \n" +
 									"uniform sampler2D texture; \n" +
 									"void main()\n{\n" +
-									"gl_FragColor =  texture2D(texture, uvcoord); \n} \n";
+									"gl_FragColor =  color; \n} \n";
 
 	
 }

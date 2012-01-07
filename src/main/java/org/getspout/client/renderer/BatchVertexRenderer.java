@@ -13,11 +13,6 @@ import org.getspout.client.renderer.shader.Shader;
 import org.newdawn.slick.opengl.Texture;
 
 
-/**
- * 
- * @author RoyAwesome
- *
- */
 public abstract class BatchVertexRenderer {
 
 	public static BatchModes GLMode = BatchModes.GL30;

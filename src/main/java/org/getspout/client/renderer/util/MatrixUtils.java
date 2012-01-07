@@ -7,12 +7,12 @@ import org.getspout.api.math.Vector3;
 
 public class MatrixUtils {
 	
-	public static Matrix createLookAt(Vector3 center, Vector3 at, Vector3 up){
-		Vector3 f = center.subtract(at).normalize();
+	public static Matrix createLookAt(Vector3 eye, Vector3 at, Vector3 up){
+		Vector3 f = eye.subtract(at).normalize();
 		up = up.normalize();
 		
-		Vector3 s = f.cross(up);
-		Vector3 u = s.cross(f);
+		Vector3 s = f.cross(up).normalize();
+		Vector3 u = s.cross(f).normalize();
 
 		
 		Matrix mat = new Matrix(4);
@@ -29,8 +29,8 @@ public class MatrixUtils {
 		mat.set(2, 1, -f.getY());
 		mat.set(2, 2, -f.getZ());
 	
-		mat = mat.multiply(Matrix.translate(center));
-		
+		Matrix trans = Matrix.translate(eye.multiply(-1));
+		mat = Matrix.multiply(trans, mat);
 		return mat;		
 	}
 	

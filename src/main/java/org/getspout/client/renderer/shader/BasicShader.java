@@ -1,6 +1,6 @@
 package org.getspout.client.renderer.shader;
 
-import java.io.FileNotFoundException;
+
 import java.nio.FloatBuffer;
 
 import org.getspout.api.math.Matrix;
