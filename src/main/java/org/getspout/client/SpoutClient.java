@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.getspout.api.math.Matrix;
 import org.getspout.api.math.Vector3;
+import org.getspout.client.batcher.PrimitiveBatch;
 import org.getspout.client.renderer.BatchVertexRenderer;
 import org.getspout.client.renderer.shader.BasicShader;
 import org.getspout.client.renderer.util.MatrixUtils;
@@ -32,18 +33,19 @@ public class SpoutClient {
 		}
 
 		
+		glLoadIdentity();
+		
+		
 		BatchVertexRenderer renderer = BatchVertexRenderer.constructNewBatch(GL_TRIANGLES);
+		
 		BasicShader shader = new BasicShader();
-		Matrix perspective = MatrixUtils.createPerspective(45, 4.f/3.f, .01f, 100f);
-		Matrix view = MatrixUtils.createLookAt(new Vector3(0,2,-1), Vector3.ZERO, Vector3.Up);
-		System.out.println(perspective);
-		System.out.println(view);
+		Matrix perspective = MatrixUtils.createPerspective(60, 4.f/3.f, .01f, 100f);
+		Matrix view = MatrixUtils.createLookAt(new Vector3(1,0,2), Vector3.ZERO, Vector3.Up);
 		shader.setProjectionMatrix(perspective);
 		shader.setViewMatrix(view);
-		//GLU.gluPerspective(45, 4.f/3.f, .01f, 100.0f);
-		//shader.setProjectionMatrix(new Matrix());
-		//shader.setViewMatrix(new Matrix());
-		//shader.SetUniform("texture", tex);
+		System.out.println(perspective);
+		System.out.println(view);
+		
 		renderer.setShader(shader);
 		renderer.enableColors();
 
@@ -51,31 +53,54 @@ public class SpoutClient {
 		renderer.begin();
 		renderer.AddColor(1.0f, 0.0f, 0.0f);
 		renderer.AddTexCoord(1.0f, 1.0f);
-		renderer.AddVertex(.5f, .5f);
+		renderer.AddVertex(-0.5f, -0.5f, -1.0f);
 
 
 		renderer.AddColor(0.0f, 1.0f, 0.0f);
 		renderer.AddTexCoord(0.0f, 1.0f);
-		renderer.AddVertex(-.5f, .5f);
+		renderer.AddVertex(0.5f, -0.5f, -10.0f );
 
 
 		renderer.AddColor(0.0f, 0.0f, 1.0f);
 		renderer.AddTexCoord(0.0f, 0.0f);
-		renderer.AddVertex(-.5f, -.5f);
+		renderer.AddVertex( 0.0f, 0.5f, -10.0f);
 
 	//	renderer.AddColor(0.0f, 0.0f, 1.0f);
 	//	renderer.AddTexCoord(1.0f, 0.0f);
 	//	renderer.AddVertex(.5f, -.5f);
 
 		renderer.end();
-	
-
+		
+		/*
+		PrimitiveBatch batch = new PrimitiveBatch();
+		batch.getRenderer().setShader(shader);
+		
+		batch.begin();
+		batch.AddQuad(Vector3.ZERO, new Vector3(1,0,0), new Vector3(0,0,1), new Vector3(1,0,1));
+		batch.end();
+		*/
+		
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 		while (!Display.isCloseRequested()) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			// render OpenGL here
+			
 			renderer.render();
+			
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			GLU.gluPerspective(60, 4.f/3.f, .01f, 100f);
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			GLU.gluLookAt(1, 0,2, 0, 0, 0, 0, 1, 0);
+			
+			glBegin( GL_TRIANGLES ); 
+			glVertex3f( -0.5f, -0.5f, -1.0f ); 
+			glVertex3f( 0.5f, -0.5f, -10.0f ); 
+			glVertex3f( 0.0f, 0.5f, -10.0f ); 
+			glEnd(); 
+			
+			//batch.draw();
 
 			Display.update();
 		}

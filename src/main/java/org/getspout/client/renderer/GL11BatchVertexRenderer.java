@@ -16,6 +16,8 @@ public class GL11BatchVertexRenderer extends BatchVertexRenderer {
 	protected void doFlush(){
 		if(!(activeShader instanceof BasicShader)) throw new IllegalStateException("Need Basic Shader in 1.1 mode");
 			
+		
+		
 		GL11.glNewList(displayList, GL11.GL_COMPILE);
 		((BasicShader)activeShader).assign(true);
 		GL11.glPushMatrix();

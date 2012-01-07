@@ -22,19 +22,21 @@ public class BasicShader extends Shader {
 		
 		if(compatabilityMode){
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
-			matrixBuffer.position(0);
+			matrixBuffer.clear();
 			matrixBuffer.put(getProjectionMatrix().toArray());
 			matrixBuffer.flip();
 			
 			GL11.glLoadMatrix(matrixBuffer);
 			
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
-			matrixBuffer.position(0);
+			matrixBuffer.clear();
 			matrixBuffer.put(getViewMatrix().toArray());
 			matrixBuffer.flip();
 			
 			GL11.glLoadMatrix(matrixBuffer);
 			
+		}else{
+			super.assign();
 		}
 		
 	}
