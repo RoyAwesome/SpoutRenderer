@@ -1,4 +1,4 @@
-package org.getspout.client.renderer;
+package org.spout.client.renderer;
 
 import java.awt.geom.Rectangle2D;
 

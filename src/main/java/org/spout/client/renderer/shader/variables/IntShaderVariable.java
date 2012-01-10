@@ -1,4 +1,4 @@
-package org.getspout.client.renderer.shader.variables;
+package org.spout.client.renderer.shader.variables;
 
 import org.lwjgl.opengl.GL20;
 

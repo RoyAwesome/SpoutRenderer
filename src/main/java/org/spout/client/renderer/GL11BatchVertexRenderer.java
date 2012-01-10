@@ -1,6 +1,6 @@
-package org.getspout.client.renderer;
-import org.getspout.client.renderer.shader.BasicShader;
+package org.spout.client.renderer;
 import org.lwjgl.opengl.*;
+import org.spout.client.renderer.shader.BasicShader;
 public class GL11BatchVertexRenderer extends BatchVertexRenderer {
 	
 	int displayList;

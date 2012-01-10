@@ -1,24 +1,24 @@
-package org.getspout.client.renderer.shader;
+package org.spout.client.renderer.shader;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import org.getspout.client.renderer.shader.variables.AttributeShaderVariable;
-import org.getspout.client.renderer.shader.variables.FloatShaderVariable;
-import org.getspout.client.renderer.shader.variables.IntShaderVariable;
-import org.getspout.client.renderer.shader.variables.Mat2ShaderVariable;
-import org.getspout.client.renderer.shader.variables.Mat3ShaderVariable;
-import org.getspout.client.renderer.shader.variables.Mat4ShaderVariable;
-import org.getspout.client.renderer.shader.variables.ShaderVariable;
-import org.getspout.client.renderer.shader.variables.TextureSamplerShaderVariable;
-import org.getspout.client.renderer.shader.variables.Vec2ShaderVariable;
-import org.getspout.client.renderer.shader.variables.Vec3ShaderVariable;
-import org.getspout.client.renderer.shader.variables.Vec4ShaderVariable;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.newdawn.slick.opengl.Texture;
-import org.getspout.api.math.*;
+import org.spout.client.renderer.shader.variables.AttributeShaderVariable;
+import org.spout.client.renderer.shader.variables.FloatShaderVariable;
+import org.spout.client.renderer.shader.variables.IntShaderVariable;
+import org.spout.client.renderer.shader.variables.Mat2ShaderVariable;
+import org.spout.client.renderer.shader.variables.Mat3ShaderVariable;
+import org.spout.client.renderer.shader.variables.Mat4ShaderVariable;
+import org.spout.client.renderer.shader.variables.ShaderVariable;
+import org.spout.client.renderer.shader.variables.TextureSamplerShaderVariable;
+import org.spout.client.renderer.shader.variables.Vec2ShaderVariable;
+import org.spout.client.renderer.shader.variables.Vec3ShaderVariable;
+import org.spout.client.renderer.shader.variables.Vec4ShaderVariable;
+import org.Spout.api.math.*;
 
 
 

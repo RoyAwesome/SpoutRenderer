@@ -1,8 +1,8 @@
-package org.getspout.client.batcher;
+package org.spout.client.batcher;
 
-import org.getspout.api.math.Vector3;
-import org.getspout.client.renderer.BatchVertexRenderer;
+import org.spout.api.math.Vector3;
 import org.lwjgl.opengl.GL11;
+import org.spout.client.renderer.BatchVertexRenderer;
 
 public class PrimitiveBatch {
 	BatchVertexRenderer renderer;

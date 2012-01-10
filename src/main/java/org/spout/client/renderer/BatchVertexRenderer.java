@@ -1,15 +1,15 @@
-package org.getspout.client.renderer;
+package org.spout.client.renderer;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import gnu.trove.list.array.*;
 
 
-import org.getspout.api.math.Vector2;
-import org.getspout.api.math.Vector3;
-import org.getspout.api.math.Vector4;
-import org.getspout.client.renderer.shader.EmptyShader;
-import org.getspout.client.renderer.shader.Shader;
+import org.spout.api.math.Vector2;
+import org.spout.api.math.Vector3;
+import org.spout.api.math.Vector4;
+import org.spout.client.renderer.shader.EmptyShader;
+import org.spout.client.renderer.shader.Shader;
 import org.newdawn.slick.opengl.Texture;
 
 

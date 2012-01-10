@@ -1,20 +1,22 @@
-package org.getspout.client;
+package org.spout.client;
 
 import java.awt.DisplayMode;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 
-import org.getspout.api.math.Matrix;
-import org.getspout.api.math.Vector3;
-import org.getspout.client.batcher.PrimitiveBatch;
-import org.getspout.client.renderer.BatchVertexRenderer;
-import org.getspout.client.renderer.shader.BasicShader;
-import org.getspout.client.renderer.util.MatrixUtils;
+import org.spout.api.math.Matrix;
+import org.spout.api.math.Vector3;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+import org.spout.client.batcher.PrimitiveBatch;
+import org.spout.client.renderer.BatchVertexRenderer;
+import org.spout.client.renderer.shader.BasicShader;
+import org.spout.client.renderer.util.MatrixUtils;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -31,15 +33,29 @@ public class SpoutClient {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
-		
+		FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(4*4);
+		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+		GLU.gluLookAt(1, 0, 2, 0, 0, 0, 0, 1, 0);
+		GL11.glGetFloat(GL_MODELVIEW_MATRIX, matrixBuffer);
+		for(int i = 0; i < 16; i++){
+			System.out.print(matrixBuffer.get(i) + ", ");
+		}
+		System.out.println();
 		
-		
+		matrixBuffer.clear();
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		GLU.gluPerspective(60, 4.f/3.f, .1f, 100f);
+		GL11.glGetFloat(GL_PROJECTION_MATRIX, matrixBuffer);
+		for(int i = 0; i < 16; i++){
+			System.out.print(matrixBuffer.get(i) + ", ");
+		}
+		System.out.println();
 		BatchVertexRenderer renderer = BatchVertexRenderer.constructNewBatch(GL_TRIANGLES);
 		
 		BasicShader shader = new BasicShader();
-		Matrix perspective = MatrixUtils.createPerspective(60, 4.f/3.f, .01f, 100f);
+		Matrix perspective = MatrixUtils.createPerspective(60, 4.f/3.f, .1f, 100f);
 		Matrix view = MatrixUtils.createLookAt(new Vector3(1,0,2), Vector3.ZERO, Vector3.Up);
 		shader.setProjectionMatrix(perspective);
 		shader.setViewMatrix(view);
@@ -85,14 +101,14 @@ public class SpoutClient {
 		while (!Display.isCloseRequested()) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
-			renderer.render();
+			
 			
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			GLU.gluPerspective(60, 4.f/3.f, .01f, 100f);
+			GLU.gluPerspective(60, 4.f/3.f, .1f, 100f);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
-			GLU.gluLookAt(1, 0,2, 0, 0, 0, 0, 1, 0);
+			GLU.gluLookAt(1, 0, 2, 0, 0, 0, 0, 1, 0);
 			
 			glBegin( GL_TRIANGLES ); 
 			glVertex3f( -0.5f, -0.5f, -1.0f ); 
@@ -100,6 +116,7 @@ public class SpoutClient {
 			glVertex3f( 0.0f, 0.5f, -10.0f ); 
 			glEnd(); 
 			
+			renderer.render();
 			//batch.draw();
 
 			Display.update();

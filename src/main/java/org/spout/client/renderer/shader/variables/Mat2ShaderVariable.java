@@ -1,8 +1,8 @@
-package org.getspout.client.renderer.shader.variables;
+package org.spout.client.renderer.shader.variables;
 
 import java.nio.FloatBuffer;
 
-import org.getspout.api.math.Matrix;
+import org.spout.api.math.Matrix;
 import org.lwjgl.opengl.GL20;
 
 public class Mat2ShaderVariable extends ShaderVariable {

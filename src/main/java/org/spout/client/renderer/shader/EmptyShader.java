@@ -1,4 +1,4 @@
-package org.getspout.client.renderer.shader;
+package org.spout.client.renderer.shader;
 
 import java.io.FileNotFoundException;
 

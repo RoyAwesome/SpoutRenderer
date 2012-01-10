@@ -1,4 +1,4 @@
-package org.getspout.client.renderer.shader;
+package org.spout.client.renderer.shader;
 
 public class ShaderCompileException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

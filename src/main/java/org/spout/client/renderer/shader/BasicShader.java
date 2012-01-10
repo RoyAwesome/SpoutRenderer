@@ -1,12 +1,12 @@
-package org.getspout.client.renderer.shader;
+package org.spout.client.renderer.shader;
 
 
 import java.nio.FloatBuffer;
 
-import org.getspout.api.math.Matrix;
-import org.getspout.client.renderer.shader.variables.Mat4ShaderVariable;
+import org.spout.api.math.Matrix;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.spout.client.renderer.shader.variables.Mat4ShaderVariable;
 
 public class BasicShader extends Shader {
 	FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(4*4);
