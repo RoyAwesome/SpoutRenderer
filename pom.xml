@@ -3,6 +3,18 @@
   <groupId>spoutclient</groupId>
   <artifactId>spoutclient</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
+  <repositories>
+  	<repository>
+  		<id>spout-repo</id>
+  		<url>http://repo.spout.org</url>
+  	</repository>
+  	<repository>
+  		<id>slick-repo</id>
+  		<url>http://slick.cokeandcode.com/mavenrepo/</url>
+  	</repository>
+  </repositories>
+
   <dependencies>
   	<dependency>
   		<groupId>org.lwjgl.lwjgl</groupId>
@@ -31,23 +43,29 @@
   		<artifactId>spoutapi</artifactId>
   		<version>dev-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>slick</groupId>
+  		<artifactId>slick</artifactId>
+  		<version>274</version>
+  	</dependency>
   </dependencies>
+
   <build>
   	<plugins>
   		<plugin>
-        <groupId>com.googlecode.mavennatives</groupId>
-        <artifactId>maven-nativedependencies-plugin</artifactId>
-        <version>0.0.5</version>
-        <executions>
+        	<groupId>com.googlecode.mavennatives</groupId>
+        	<artifactId>maven-nativedependencies-plugin</artifactId>
+        	<version>0.0.5</version>
+        	<executions>
                 <execution>
-                        <id>unpacknatives</id>
-                        <phase>generate-resources</phase>
+                	<id>unpacknatives</id>
+                	<phase>generate-resources</phase>
                         <goals>
-                                <goal>copy</goal>
+                        	<goal>copy</goal>
                         </goals>
                 </execution>
-        </executions>
-</plugin>
+        	</executions>
+		</plugin>
   	</plugins>
   </build>
 </project>
