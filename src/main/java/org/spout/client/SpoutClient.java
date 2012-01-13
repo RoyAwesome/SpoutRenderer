@@ -39,7 +39,7 @@ public class SpoutClient {
 		
 		BasicShader shader = new BasicShader();
 		Matrix perspective = MatrixUtils.createPerspective(60, 4.f/3.f, .1f, 100f);
-		Matrix view = MatrixUtils.createLookAt(new Vector3(3,4,3), Vector3.ZERO, Vector3.Up);
+		Matrix view = MatrixUtils.createLookAt(new Vector3(3,-4,3), Vector3.ZERO, Vector3.Up);
 		shader.setProjectionMatrix(perspective);
 		shader.setViewMatrix(view);		
 		renderer.setShader(shader);
@@ -61,6 +61,7 @@ public class SpoutClient {
 		batch.AddQuad(corners[3], corners[2], corners[6], corners[7]);
 		batch.AddQuad(corners[4], corners[5], corners[1], corners[0]);
 		batch.AddQuad(corners[1], corners[5], corners[6], corners[2]);
+		batch.AddQuad(corners[4], corners[0], corners[3], corners[7]);
 		batch.end();
 		
 		
