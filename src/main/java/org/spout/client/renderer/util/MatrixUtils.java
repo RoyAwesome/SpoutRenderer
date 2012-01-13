@@ -20,9 +20,7 @@ public class MatrixUtils {
 		mat.set(0, 0, s.getX());
 		mat.set(1, 0, s.getY());
 		mat.set(2, 0, s.getZ());
-		
-		System.out.println(">"+s);
-		
+			
 		mat.set(0, 1, u.getX());
 		mat.set(1, 1, u.getY());
 		mat.set(2, 1, u.getZ());
