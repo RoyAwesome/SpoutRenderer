@@ -15,7 +15,7 @@ import org.newdawn.slick.opengl.Texture;
 
 public abstract class BatchVertexRenderer {
 
-	public static BatchModes GLMode = BatchModes.GL11;
+	public static BatchModes GLMode = BatchModes.GL30;
 	
 	public static BatchVertexRenderer constructNewBatch(int renderMode){
 		if(GLMode == BatchModes.GL11) return new GL11BatchVertexRenderer(renderMode);

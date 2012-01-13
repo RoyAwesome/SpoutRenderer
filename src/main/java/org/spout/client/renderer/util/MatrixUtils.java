@@ -18,19 +18,21 @@ public class MatrixUtils {
 		Matrix mat = new Matrix(4);
 
 		mat.set(0, 0, s.getX());
-		mat.set(0, 1, s.getY());
-		mat.set(0, 2, s.getZ());
-
-		mat.set(1, 0, u.getX());
+		mat.set(1, 0, s.getY());
+		mat.set(2, 0, s.getZ());
+		
+		System.out.println(">"+s);
+		
+		mat.set(0, 1, u.getX());
 		mat.set(1, 1, u.getY());
-		mat.set(1, 2, u.getZ());
+		mat.set(2, 1, u.getZ());
 
-		mat.set(2, 0, -f.getX());
-		mat.set(2, 1, -f.getY());
+		mat.set(0, 2, -f.getX());
+		mat.set(1, 2, -f.getY());
 		mat.set(2, 2, -f.getZ());
 
 		Matrix trans = Matrix.translate(eye.multiply(-1));
-		mat = Matrix.multiply(mat, trans);
+		mat = Matrix.multiply(trans, mat);
 		return mat;		
 	}
 
@@ -55,9 +57,9 @@ public class MatrixUtils {
 		ortho.set(0, 2, (right+left) / temp2);
 		ortho.set(1, 2, (top + bottom) / temp3);
 		ortho.set(2, 2, (-far - near) / temp4);
-		ortho.set(3, 2, -1);
+		ortho.set(2, 3, -1);
 
-		ortho.set(2, 3, (-temp * far) / temp4);
+		ortho.set(3, 2, (-temp * far) / temp4);
 		ortho.set(3, 3, 0);
 
 

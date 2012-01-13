@@ -18,7 +18,7 @@ import org.spout.client.renderer.shader.variables.TextureSamplerShaderVariable;
 import org.spout.client.renderer.shader.variables.Vec2ShaderVariable;
 import org.spout.client.renderer.shader.variables.Vec3ShaderVariable;
 import org.spout.client.renderer.shader.variables.Vec4ShaderVariable;
-import org.Spout.api.math.*;
+import org.spout.api.math.*;
 
 
 
