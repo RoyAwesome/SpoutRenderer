@@ -1,18 +1,10 @@
 package org.spout.client;
 
-import java.awt.DisplayMode;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-
 import org.spout.api.math.Matrix;
 import org.spout.api.math.Vector3;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.util.glu.GLU;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+import org.lwjgl.opengl.DisplayMode;
 import org.spout.client.batcher.PrimitiveBatch;
 import org.spout.client.renderer.BatchVertexRenderer;
 import org.spout.client.renderer.shader.BasicShader;
@@ -26,7 +18,7 @@ public class SpoutClient {
 	
 	public void start() throws InterruptedException {
 		try {
-			Display.setDisplayMode(new org.lwjgl.opengl.DisplayMode(800,600));
+			Display.setDisplayMode(new DisplayMode(800,600));
 			
 			Display.create();
 
