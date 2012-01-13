@@ -80,7 +80,7 @@ public class SpoutClient {
 			ticks++;
 			long dt = System.currentTimeMillis() - time;
 			//run at 60fps
-			Thread.sleep(16 - dt);
+			if(dt < 16) Thread.sleep(16 - dt);
 			
 		}
 
