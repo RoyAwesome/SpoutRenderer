@@ -20,6 +20,7 @@ public abstract class BatchVertexRenderer {
 	public static BatchVertexRenderer constructNewBatch(int renderMode){
 		if(GLMode == BatchModes.GL11) return new GL11BatchVertexRenderer(renderMode);
 		if(GLMode == BatchModes.GL30) return new GL30BatchVertexRenderer(renderMode);
+		if(GLMode == BatchModes.GLES20) return new GLES20BatchVertexRenderer(renderMode);
 		throw new IllegalArgumentException("GL Mode:" + GLMode + " Not reconized");
 	}
 	
@@ -140,7 +141,7 @@ public abstract class BatchVertexRenderer {
 	
 	
 
-	public void AddVertex(float x, float y, float z, float w){
+	public void addVertex(float x, float y, float z, float w){
 		vertexBuffer.add(x);
 		vertexBuffer.add(y);
 		vertexBuffer.add(z);
@@ -148,51 +149,51 @@ public abstract class BatchVertexRenderer {
 		
 		numVerticies++;
 	}
-	public void AddVertex(float x, float y, float z){
-		AddVertex(x,y,z,1.0f);
+	public void addVertex(float x, float y, float z){
+		addVertex(x,y,z,1.0f);
 	}
-	public void AddVertex(float x, float y){
-		AddVertex(x,y,0.0f,1.0f);
+	public void addVertex(float x, float y){
+		addVertex(x,y,0.0f,1.0f);
 	}
 	
-	public void AddVertex(Vector3 vertex){
-		AddVertex(vertex.getX(), vertex.getY(), vertex.getZ());
+	public void addVertex(Vector3 vertex){
+		addVertex(vertex.getX(), vertex.getY(), vertex.getZ());
 	}
 	public void AddVertex(Vector2 vertex){
-		AddVertex(vertex.getX(), vertex.getY());
+		addVertex(vertex.getX(), vertex.getY());
 	}
 	public void AddVertex(Vector4 vertex){
-		AddVertex(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getZ());
+		addVertex(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getZ());
 	}
 	
-	public void AddColor(float r, float g, float b){
-		AddColor(r,g,b,1.0f);
+	public void addColor(float r, float g, float b){
+		addColor(r,g,b,1.0f);
 	}
-	public void AddColor(float r, float g, float b, float a){
+	public void addColor(float r, float g, float b, float a){
 		colorBuffer.add(r);
 		colorBuffer.add(g);
 		colorBuffer.add(b);
 		colorBuffer.add(a);
 	}
 	
-	public void AddNormal(float x, float y, float z, float w){
+	public void addNormal(float x, float y, float z, float w){
 		normalBuffer.add(x);
 		normalBuffer.add(y);
 		normalBuffer.add(z);
 		normalBuffer.add(w);
 	}
-	public void AddNormal(float x, float y, float z){
-		AddNormal(x,y,z,1.0f);
+	public void addNormal(float x, float y, float z){
+		addNormal(x,y,z,1.0f);
 	}
 
-	public void AddNormal(Vector3 vertex){
-		AddNormal(vertex.getX(), vertex.getY(), vertex.getZ());
+	public void addNormal(Vector3 vertex){
+		addNormal(vertex.getX(), vertex.getY(), vertex.getZ());
 	}
-	public void AddNormal(Vector4 vertex){
-		AddNormal(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getZ());
+	public void addNormal(Vector4 vertex){
+		addNormal(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getZ());
 	}
 	
-	public void AddTexCoord(float u, float v){
+	public void addTexCoord(float u, float v){
 		uvBuffer.add(u);
 		uvBuffer.add(v);
 	}

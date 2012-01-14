@@ -81,19 +81,19 @@ public class Shader {
 	}
 	
 	
-	public void SetUniform(String name, int value){
+	public void setUniform(String name, int value){
 		variables.put(name, new IntShaderVariable(program, name, value));
 	}
-	public void SetUniform(String name, float value){
+	public void setUniform(String name, float value){
 		variables.put(name, new FloatShaderVariable(program, name, value));
 	}
-	public void SetUniform(String name, Vector2 value){
+	public void setUniform(String name, Vector2 value){
 		variables.put(name, new Vec2ShaderVariable(program, name, value));
 	}
-	public void SetUniform(String name, Vector3 value){
+	public void setUniform(String name, Vector3 value){
 		variables.put(name, new Vec3ShaderVariable(program, name, value));
 	}
-	public void SetUniform(String name, Vector4 value){
+	public void setUniform(String name, Vector4 value){
 		variables.put(name, new Vec4ShaderVariable(program, name, value));
 	}
 	public void SetUniform(String name, Matrix value){
@@ -106,7 +106,7 @@ public class Shader {
 		}
 		
 	}
-	public void SetUniform(String name, Texture value){
+	public void setUniform(String name, Texture value){
 		if(variables.containsKey(name)){
 			ShaderVariable texture = variables.get(name);
 			if(!(texture instanceof TextureSamplerShaderVariable)) throw new IllegalStateException(name + " is not a texture!");
@@ -166,9 +166,9 @@ public class Shader {
 	}
 	
 	String fallbackVertexShader = "attribute vec4 vPosition;\n" +
-								  "attribute vec4 vColor;   //in \n" +
+								  "attribute vec4 vColor;\n" +
 								  "attribute vec2 vTexCoord; \n"+
-								  "varying vec4 color;   //out \n" +
+								  "varying vec4 color;\n" +
 								  "varying vec2 uvcoord; \n" +
 								  "uniform mat4 Projection; \n"+
 								  "uniform mat4 View; \n" +

@@ -8,7 +8,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.spout.client.batcher.PrimitiveBatch;
 import org.spout.client.renderer.BatchVertexRenderer;
 import org.spout.client.renderer.shader.BasicShader;
-import org.spout.client.renderer.util.MatrixUtils;
 import org.spout.client.renderer.vertexformat.PositionColor;
 import org.spout.api.util.Color;
 
@@ -56,8 +55,8 @@ public class SpoutClient {
 			double x = 5 * Math.sin(Math.toRadians(ticks));
 			double z = 5 * Math.cos(Math.toRadians(ticks));
 			double y = 5 * Math.sin(Math.toRadians(ticks));
-			Matrix perspective = MatrixUtils.createPerspective(60, 4.f/3.f, .1f, 100f);
-			Matrix view = MatrixUtils.createLookAt(new Vector3(x,y,z), Vector3.ZERO, Vector3.Up);
+			Matrix perspective = Matrix.createPerspective(60, 4.f/3.f, .1f, 100f);
+			Matrix view = Matrix.createLookAt(new Vector3(x,y,z), Vector3.ZERO, Vector3.Up);
 			shader.setProjectionMatrix(perspective);
 			shader.setViewMatrix(view);		
 			renderer.setShader(shader);
@@ -65,22 +64,23 @@ public class SpoutClient {
 
 			
 			batch.begin();
-			batch.AddQuad(corners[0], corners[1], corners[2], corners[3]);
-			batch.AddQuad(corners[7], corners[6], corners[5], corners[4]);
-			batch.AddQuad(corners[3], corners[2], corners[6], corners[7]);
-			batch.AddQuad(corners[4], corners[5], corners[1], corners[0]);
-			batch.AddQuad(corners[1], corners[5], corners[6], corners[2]);
-			batch.AddQuad(corners[4], corners[0], corners[3], corners[7]);
+			batch.addQuad(corners[0], corners[1], corners[2], corners[3]);
+			batch.addQuad(corners[7], corners[6], corners[5], corners[4]);
+			batch.addQuad(corners[3], corners[2], corners[6], corners[7]);
+			batch.addQuad(corners[4], corners[5], corners[1], corners[0]);
+			batch.addQuad(corners[1], corners[5], corners[6], corners[2]);
+			batch.addQuad(corners[4], corners[0], corners[3], corners[7]);
 			batch.end();
 			
 			
 			batch.draw();
 
 			Display.update();
-			ticks++;
+			ticks++;			
 			long dt = System.currentTimeMillis() - time;
 			//run at 60fps
 			if(dt < 16) Thread.sleep(16 - dt);
+		
 			
 		}
 

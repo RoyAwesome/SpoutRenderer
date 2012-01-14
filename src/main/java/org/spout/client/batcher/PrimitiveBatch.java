@@ -21,34 +21,34 @@ public class PrimitiveBatch {
 		renderer.begin();
 	}
 	
-	public void AddQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d){
-		renderer.AddVertex(a);
-		renderer.AddVertex(b);
-		renderer.AddVertex(c);
+	public void addQuad(Vector3 a, Vector3 b, Vector3 c, Vector3 d){
+		renderer.addVertex(a);
+		renderer.addVertex(b);
+		renderer.addVertex(c);
 		
-		renderer.AddVertex(c);
-		renderer.AddVertex(a);
-		renderer.AddVertex(d);
+		renderer.addVertex(c);
+		renderer.addVertex(a);
+		renderer.addVertex(d);
 		
 	}
-	public void AddQuad(PositionColor a, PositionColor b, PositionColor c, PositionColor d){
-		renderer.AddColor(a.getColor().getRedF(), a.getColor().getGreenF(), a.getColor().getBlueF());
-		renderer.AddVertex(a.getPosition());
+	public void addQuad(PositionColor a, PositionColor b, PositionColor c, PositionColor d){
+		renderer.addColor(a.getColor().getRedF(), a.getColor().getGreenF(), a.getColor().getBlueF());
+		renderer.addVertex(a.getPosition());
 		
-		renderer.AddColor(b.getColor().getRedF(), b.getColor().getGreenF(), b.getColor().getBlueF());
-		renderer.AddVertex(b.getPosition());
+		renderer.addColor(b.getColor().getRedF(), b.getColor().getGreenF(), b.getColor().getBlueF());
+		renderer.addVertex(b.getPosition());
 		
-		renderer.AddColor(c.getColor().getRedF(), c.getColor().getGreenF(), c.getColor().getBlueF());
-		renderer.AddVertex(c.getPosition());
+		renderer.addColor(c.getColor().getRedF(), c.getColor().getGreenF(), c.getColor().getBlueF());
+		renderer.addVertex(c.getPosition());
 		
-		renderer.AddColor(c.getColor().getRedF(), c.getColor().getGreenF(), c.getColor().getBlueF());
-		renderer.AddVertex(c.getPosition());
+		renderer.addColor(c.getColor().getRedF(), c.getColor().getGreenF(), c.getColor().getBlueF());
+		renderer.addVertex(c.getPosition());
 		
-		renderer.AddColor(d.getColor().getRedF(), d.getColor().getGreenF(), d.getColor().getBlueF());
-		renderer.AddVertex(d.getPosition());
+		renderer.addColor(d.getColor().getRedF(), d.getColor().getGreenF(), d.getColor().getBlueF());
+		renderer.addVertex(d.getPosition());
 		
-		renderer.AddColor(a.getColor().getRedF(), a.getColor().getGreenF(), a.getColor().getBlueF());
-		renderer.AddVertex(a.getPosition());
+		renderer.addColor(a.getColor().getRedF(), a.getColor().getGreenF(), a.getColor().getBlueF());
+		renderer.addVertex(a.getPosition());
 		
 	}
 	
