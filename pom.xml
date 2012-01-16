@@ -68,4 +68,6 @@
 		</plugin>
   	</plugins>
   </build>
+  <name>Spout Client</name>
+  <description>testing for spout client</description>
 </project>

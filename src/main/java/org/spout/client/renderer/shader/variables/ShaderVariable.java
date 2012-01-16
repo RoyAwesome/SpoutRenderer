@@ -12,6 +12,9 @@ public abstract class ShaderVariable {
 	public ShaderVariable(int program, String name){
 		this.program = program;
 		GL20.glUseProgram(program);
+		//If we are an attribute, we aren't a uniform.  Don't continue
+		if(this instanceof AttributeShaderVariable) return;
+		
 		this.location = GL20.glGetUniformLocation(program, name);
 		
 		//Error Checking.  In production, leave this as a warning, because OpenGL doesn't care if you try to put something

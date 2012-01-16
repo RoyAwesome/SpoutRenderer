@@ -42,7 +42,7 @@ public class BasicShader extends Shader {
 	}
 	
 	public void setViewMatrix(Matrix mat){
-		SetUniform("View", mat);
+		setUniform("View", mat);
 	}
 	
 	public Matrix getViewMatrix()	{
@@ -55,6 +55,6 @@ public class BasicShader extends Shader {
 	
 	
 	public void setProjectionMatrix(Matrix mat){
-		SetUniform("Projection", mat);
+		setUniform("Projection", mat);
 	}
 }

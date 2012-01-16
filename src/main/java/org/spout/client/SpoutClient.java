@@ -8,6 +8,7 @@ import org.lwjgl.opengl.DisplayMode;
 import org.spout.client.batcher.PrimitiveBatch;
 import org.spout.client.renderer.BatchVertexRenderer;
 import org.spout.client.renderer.shader.BasicShader;
+import org.spout.client.renderer.shader.Shader;
 import org.spout.client.renderer.vertexformat.PositionColor;
 import org.spout.api.util.Color;
 
@@ -26,17 +27,31 @@ public class SpoutClient {
 			System.exit(0);
 		}
 		
-		BatchVertexRenderer renderer = BatchVertexRenderer.constructNewBatch(GL_TRIANGLES);
 		
-		BasicShader shader = new BasicShader();
+		//Shader shader = new BasicShader();
+		Shader shader = new Shader("vBasicLight.glsl", "fBasicLight.glsl");
 		
 	
 		PrimitiveBatch batch = new PrimitiveBatch();
 		batch.getRenderer().setShader(shader);
 		
-		Color col = new Color(0.0f, 1.0f, 0.0f);
-		Color col2 = new Color(0.0f, 0.0f, 1.0f);
-		Color col3 = new Color(1.0f, 0.0f, 0.0f);
+		Color col = new Color(0.0f, .5f, 0.0f);
+		Color col2 = new Color(0.0f, 0.0f, 0.5f);
+		Color col3 = new Color(0.5f, 0.0f, 0.0f);
+		
+		Color ambientColor = new Color(.5f, .5f, .5f);
+		
+		Vector3 lightDirection = new Vector3(1.0f, 0, 0);
+		Color lightColor = new Color(.9f, 0.0f, 0.0f);
+		
+		shader.setUniform("ambientColor", ambientColor);
+		shader.setUniform("lightDirection", lightDirection);
+		shader.setUniform("lightColor", lightColor);
+		
+	
+		Matrix perspective = Matrix.createPerspective(60, 4.f/3.f, .1f, 100f);
+		shader.setUniform("Projection", perspective);
+		
 		
 		PositionColor[] corners = { new PositionColor(Vector3.ZERO, col3) , new PositionColor(Vector3.UNIT_Y, col), new PositionColor(new Vector3(0,1,1), col), new PositionColor(Vector3.UNIT_Z, col),
 				new PositionColor(Vector3.UNIT_X, col3), new PositionColor(new Vector3(1,1,0), col2), new PositionColor(Vector3.ONE, col2), new PositionColor(new Vector3(1, 0, 1), col2)};
@@ -55,12 +70,13 @@ public class SpoutClient {
 			double x = 5 * Math.sin(Math.toRadians(ticks));
 			double z = 5 * Math.cos(Math.toRadians(ticks));
 			double y = 5 * Math.sin(Math.toRadians(ticks));
-			Matrix perspective = Matrix.createPerspective(60, 4.f/3.f, .1f, 100f);
+			
 			Matrix view = Matrix.createLookAt(new Vector3(x,y,z), Vector3.ZERO, Vector3.Up);
-			shader.setProjectionMatrix(perspective);
-			shader.setViewMatrix(view);		
-			renderer.setShader(shader);
-			renderer.enableColors();
+			
+			shader.setUniform("View", view);		
+			batch.getRenderer().setShader(shader);
+			
+		
 
 			
 			batch.begin();

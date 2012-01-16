@@ -103,13 +103,11 @@ public class GL30BatchVertexRenderer extends BatchVertexRenderer {
 	 * Draws this batch
 	 */
 	public void doRender(){
-		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-		
 		GL30.glBindVertexArray(vao);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbos);
+		
 		activeShader.assign();
 		GL11.glDrawArrays(renderMode, 0, numVerticies);
-		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
-		
 		
 		
 	}

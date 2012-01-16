@@ -17,6 +17,7 @@ public class PrimitiveBatch {
 	}
 	
 	public void begin(){
+		renderer.enableNormals();
 		renderer.enableColors();
 		renderer.begin();
 	}
@@ -32,22 +33,29 @@ public class PrimitiveBatch {
 		
 	}
 	public void addQuad(PositionColor a, PositionColor b, PositionColor c, PositionColor d){
+		Vector3 normal = (a.getPosition().subtract(b.getPosition())).cross(b.getPosition().subtract(c.getPosition()));
 		renderer.addColor(a.getColor().getRedF(), a.getColor().getGreenF(), a.getColor().getBlueF());
+		renderer.addNormal(normal);
 		renderer.addVertex(a.getPosition());
 		
 		renderer.addColor(b.getColor().getRedF(), b.getColor().getGreenF(), b.getColor().getBlueF());
+		renderer.addNormal(normal);
 		renderer.addVertex(b.getPosition());
 		
 		renderer.addColor(c.getColor().getRedF(), c.getColor().getGreenF(), c.getColor().getBlueF());
+		renderer.addNormal(normal);		
 		renderer.addVertex(c.getPosition());
 		
 		renderer.addColor(c.getColor().getRedF(), c.getColor().getGreenF(), c.getColor().getBlueF());
+		renderer.addNormal(normal);		
 		renderer.addVertex(c.getPosition());
 		
 		renderer.addColor(d.getColor().getRedF(), d.getColor().getGreenF(), d.getColor().getBlueF());
+		renderer.addNormal(normal);		
 		renderer.addVertex(d.getPosition());
 		
 		renderer.addColor(a.getColor().getRedF(), a.getColor().getGreenF(), a.getColor().getBlueF());
+		renderer.addNormal(normal);		
 		renderer.addVertex(a.getPosition());
 		
 	}

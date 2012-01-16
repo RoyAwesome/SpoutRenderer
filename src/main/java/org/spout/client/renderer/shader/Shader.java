@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.newdawn.slick.opengl.Texture;
 import org.spout.client.renderer.shader.variables.AttributeShaderVariable;
+import org.spout.client.renderer.shader.variables.ColorShaderVariable;
 import org.spout.client.renderer.shader.variables.FloatShaderVariable;
 import org.spout.client.renderer.shader.variables.IntShaderVariable;
 import org.spout.client.renderer.shader.variables.Mat2ShaderVariable;
@@ -19,6 +20,7 @@ import org.spout.client.renderer.shader.variables.Vec2ShaderVariable;
 import org.spout.client.renderer.shader.variables.Vec3ShaderVariable;
 import org.spout.client.renderer.shader.variables.Vec4ShaderVariable;
 import org.spout.api.math.*;
+import org.spout.api.util.Color;
 
 
 
@@ -33,11 +35,13 @@ public class Shader {
 	
 	HashMap<String, ShaderVariable> variables = new HashMap<String, ShaderVariable>();
 	
+	public static boolean validateShader = true;
+	
 	
 	
 	public Shader(String vertexShader, String fragmentShader){
 
-		
+		System.out.println("Compiling "+ vertexShader + " and " + fragmentShader);
 		//Create a new Shader object on the GPU
 		program = GL20.glCreateProgram();
 		
@@ -49,6 +53,7 @@ public class Shader {
 				vshader = readShaderSource(vertexShader);			
 			}
 			catch(FileNotFoundException e){
+				System.out.println("Vertex Shader: "+ vertexShader + " Not found, using fallback");
 				vshader = fallbackVertexShader;
 			}
 		}
@@ -75,8 +80,30 @@ public class Shader {
 			String error = GL20.glGetProgramInfoLog(program, 255);
 			throw new ShaderCompileException("Link Error: "+error);
 		}
-		
-		
+		if(validateShader){
+			GL20.glValidateProgram(this.program);
+			if(GL20.glGetProgram(program, GL20.GL_VALIDATE_STATUS) != GL11.GL_TRUE){
+				String info = GL20.glGetProgramInfoLog(program, 255);
+				System.out.println("Validate Log: \n"+info);
+			}		
+			
+			System.out.println("Attached Shaders: "+GL20.glGetProgram(program, GL20.GL_ATTACHED_SHADERS));
+			int activeAttributes = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTES);
+			System.out.println("Active Attributes: "+ activeAttributes);
+			int maxAttributeLength = GL20.glGetProgram(program, GL20.GL_ACTIVE_ATTRIBUTE_MAX_LENGTH);
+			for(int i = 0; i< activeAttributes; i++){
+				System.out.println("\t"+GL20.glGetActiveAttrib(program, i, maxAttributeLength));
+			}
+			
+			int activeUniforms = GL20.glGetProgram(program, GL20.GL_ACTIVE_UNIFORMS);
+			System.out.println("Active Uniforms: "+ activeUniforms);
+			int maxUniformLength = GL20.glGetProgram(program, GL20.GL_ACTIVE_UNIFORM_MAX_LENGTH);
+			for(int i = 0; i< activeUniforms; i++){
+				System.out.println("\t"+GL20.glGetActiveUniform(program, i, maxUniformLength));
+			}
+			
+		}
+		System.out.println("Compiled Shader with id: "+ program);
 		
 	}
 	
@@ -96,7 +123,7 @@ public class Shader {
 	public void setUniform(String name, Vector4 value){
 		variables.put(name, new Vec4ShaderVariable(program, name, value));
 	}
-	public void SetUniform(String name, Matrix value){
+	public void setUniform(String name, Matrix value){
 		if(value.getDimension() == 2){
 			variables.put(name, new Mat2ShaderVariable(program, name, value));
 		}else if(value.getDimension() == 3){
@@ -105,6 +132,9 @@ public class Shader {
 			variables.put(name, new Mat4ShaderVariable(program, name, value));
 		}
 		
+	}
+	public void setUniform(String name, Color value){
+		variables.put(name, new ColorShaderVariable(program, name, value));
 	}
 	public void setUniform(String name, Texture value){
 		if(variables.containsKey(name)){
