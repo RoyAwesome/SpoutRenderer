@@ -8,6 +8,7 @@ import gnu.trove.list.array.*;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector4;
+import org.spout.api.util.Color;
 import org.spout.client.renderer.shader.EmptyShader;
 import org.spout.client.renderer.shader.Shader;
 import org.newdawn.slick.opengl.Texture;
@@ -174,6 +175,9 @@ public abstract class BatchVertexRenderer {
 		colorBuffer.add(g);
 		colorBuffer.add(b);
 		colorBuffer.add(a);
+	}
+	public void addColor(Color color){
+		addColor(color.getRedF(), color.getGreenF(), color.getBlueF(), color.getAlphaF());
 	}
 	
 	public void addNormal(float x, float y, float z, float w){

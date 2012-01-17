@@ -80,10 +80,13 @@ public class SpoutClient {
 
 			
 			batch.begin();
-			batch.addQuad(corners[0], corners[1], corners[2], corners[3]);
+			batch.addQuad(corners[0], corners[1], corners[2], corners[3]); //draws
+			
 			batch.addQuad(corners[7], corners[6], corners[5], corners[4]);
+			
 			batch.addQuad(corners[3], corners[2], corners[6], corners[7]);
-			batch.addQuad(corners[4], corners[5], corners[1], corners[0]);
+			
+			batch.addQuad(corners[4], corners[5], corners[1], corners[0]); //draws
 			batch.addQuad(corners[1], corners[5], corners[6], corners[2]);
 			batch.addQuad(corners[4], corners[0], corners[3], corners[7]);
 			batch.end();
