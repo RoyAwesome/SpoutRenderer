@@ -8,8 +8,9 @@ import org.lwjgl.opengl.DisplayMode;
 import org.spout.client.batcher.PrimitiveBatch;
 import org.spout.client.renderer.BatchVertexRenderer;
 import org.spout.client.renderer.shader.BasicShader;
-import org.spout.client.renderer.shader.Shader;
+import org.spout.client.renderer.shader.ClientShader;
 import org.spout.client.renderer.vertexformat.PositionColor;
+import org.spout.api.render.Shader;
 import org.spout.api.util.Color;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -29,7 +30,7 @@ public class SpoutClient {
 		
 		
 		//Shader shader = new BasicShader();
-		Shader shader = new Shader("vBasicLight.glsl", "fBasicLight.glsl");
+		Shader shader = new ClientShader("src/main/resources/vBasicLight.glsl", "src/main/resources/fBasicLight.glsl");
 		
 	
 		PrimitiveBatch batch = new PrimitiveBatch();

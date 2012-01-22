@@ -4,11 +4,12 @@ import java.awt.geom.Rectangle2D;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
+import org.spout.api.render.Renderer;
 
 
 public class SpriteBatch {
 	
-	BatchVertexRenderer renderer;
+	Renderer renderer;
 	
 	boolean isBatching = false;
 	

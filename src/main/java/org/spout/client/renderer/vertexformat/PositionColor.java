@@ -3,7 +3,7 @@ package org.spout.client.renderer.vertexformat;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Color;
 
-public class PositionColor {
+public class PositionColor extends VertexFormat {
 	
 	Vector3 position;
 	Color color;

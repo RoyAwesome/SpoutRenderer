@@ -8,7 +8,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.spout.client.renderer.shader.variables.Mat4ShaderVariable;
 
-public class BasicShader extends Shader {
+public class BasicShader extends ClientShader {
 	FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(4*4);
 	
 	public BasicShader() {

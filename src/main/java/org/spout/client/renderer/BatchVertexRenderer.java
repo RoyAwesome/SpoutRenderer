@@ -8,17 +8,18 @@ import gnu.trove.list.array.*;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector4;
+import org.spout.api.render.Shader;
+import org.spout.api.render.Renderer;
 import org.spout.api.util.Color;
 import org.spout.client.renderer.shader.EmptyShader;
-import org.spout.client.renderer.shader.Shader;
 import org.newdawn.slick.opengl.Texture;
 
 
-public abstract class BatchVertexRenderer {
+public abstract class BatchVertexRenderer implements Renderer {
 
 	public static BatchModes GLMode = BatchModes.GL30;
 	
-	public static BatchVertexRenderer constructNewBatch(int renderMode){
+	public static Renderer constructNewBatch(int renderMode){
 		if(GLMode == BatchModes.GL11) return new GL11BatchVertexRenderer(renderMode);
 		if(GLMode == BatchModes.GL30) return new GL30BatchVertexRenderer(renderMode);
 		if(GLMode == BatchModes.GLES20) return new GLES20BatchVertexRenderer(renderMode);
@@ -52,8 +53,8 @@ public abstract class BatchVertexRenderer {
 		renderMode = mode;
 	}
 	
-	/**
-	 * Begin batching render calls
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#begin()
 	 */
 	public void begin(){
 		if(batching) throw new IllegalStateException("Already Batching!");
@@ -67,8 +68,8 @@ public abstract class BatchVertexRenderer {
 		
 		numVerticies = 0;
 	}
-	/**
-	 * Ends batching and flushes cache to the GPU
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#end()
 	 */
 	public void end(){
 		if(!batching) throw new IllegalStateException("Not Batching!");
@@ -76,9 +77,8 @@ public abstract class BatchVertexRenderer {
 		flush();
 	}
 	
-	/**
-	 * Flushes the contents of the cache to the GPU
-	 * 
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#flush()
 	 */
 	public final void flush(){
 		if( vertexBuffer.size() % 4 != 0) throw new IllegalStateException("Vertex Size Mismatch (How did this happen?)");
@@ -109,10 +109,8 @@ public abstract class BatchVertexRenderer {
 	
 	protected abstract void doFlush();
 	
-	protected void postFlush(){
-		
-		flushed = true;
-		
+	protected void postFlush(){		
+		flushed = true;		
 	}
 	
 	/**
@@ -124,8 +122,8 @@ public abstract class BatchVertexRenderer {
 	protected abstract void doRender();
 	
 	
-	/**
-	 * Renders the batch. 
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#render()
 	 */
 	public final void render(){
 		checkRender();
@@ -142,6 +140,9 @@ public abstract class BatchVertexRenderer {
 	
 	
 
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addVertex(float, float, float, float)
+	 */
 	public void addVertex(float x, float y, float z, float w){
 		vertexBuffer.add(x);
 		vertexBuffer.add(y);
@@ -150,59 +151,108 @@ public abstract class BatchVertexRenderer {
 		
 		numVerticies++;
 	}
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addVertex(float, float, float)
+	 */
 	public void addVertex(float x, float y, float z){
 		addVertex(x,y,z,1.0f);
 	}
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addVertex(float, float)
+	 */
 	public void addVertex(float x, float y){
 		addVertex(x,y,0.0f,1.0f);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addVertex(org.spout.api.math.Vector3)
+	 */
 	public void addVertex(Vector3 vertex){
 		addVertex(vertex.getX(), vertex.getY(), vertex.getZ());
 	}
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#AddVertex(org.spout.api.math.Vector2)
+	 */
 	public void AddVertex(Vector2 vertex){
 		addVertex(vertex.getX(), vertex.getY());
 	}
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#AddVertex(org.spout.api.math.Vector4)
+	 */
 	public void AddVertex(Vector4 vertex){
 		addVertex(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getZ());
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addColor(float, float, float)
+	 */
 	public void addColor(float r, float g, float b){
 		addColor(r,g,b,1.0f);
 	}
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addColor(float, float, float, float)
+	 */
 	public void addColor(float r, float g, float b, float a){
 		colorBuffer.add(r);
 		colorBuffer.add(g);
 		colorBuffer.add(b);
 		colorBuffer.add(a);
 	}
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addColor(org.spout.api.util.Color)
+	 */
 	public void addColor(Color color){
 		addColor(color.getRedF(), color.getGreenF(), color.getBlueF(), color.getAlphaF());
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addNormal(float, float, float, float)
+	 */
 	public void addNormal(float x, float y, float z, float w){
 		normalBuffer.add(x);
 		normalBuffer.add(y);
 		normalBuffer.add(z);
 		normalBuffer.add(w);
 	}
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addNormal(float, float, float)
+	 */
 	public void addNormal(float x, float y, float z){
 		addNormal(x,y,z,1.0f);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addNormal(org.spout.api.math.Vector3)
+	 */
 	public void addNormal(Vector3 vertex){
 		addNormal(vertex.getX(), vertex.getY(), vertex.getZ());
 	}
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addNormal(org.spout.api.math.Vector4)
+	 */
 	public void addNormal(Vector4 vertex){
 		addNormal(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getZ());
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addTexCoord(float, float)
+	 */
 	public void addTexCoord(float u, float v){
 		uvBuffer.add(u);
 		uvBuffer.add(v);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#addTexCoord(org.spout.api.math.Vector2)
+	 */
+	public void addTexCoord(Vector2 uv){
+		addTexCoord(uv.getX(), uv.getY());
+	}
 	
+	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#setShader(org.spout.client.renderer.shader.Shader)
+	 */
 	public void setShader(Shader shader){
 		if(shader == null){		
 			try {
@@ -216,14 +266,23 @@ public abstract class BatchVertexRenderer {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#enableColors()
+	 */
 	public void enableColors(){
 		useColors = true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#enableNormals()
+	 */
 	public void enableNormals(){
 		useNormals = true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.spout.client.renderer.Renderer#enableTextures()
+	 */
 	public void enableTextures(){
 		useTextures = true;
 	}

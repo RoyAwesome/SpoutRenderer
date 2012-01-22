@@ -1,18 +1,19 @@
 package org.spout.client.batcher;
 
 import org.spout.api.math.Vector3;
+import org.spout.api.render.Renderer;
 import org.lwjgl.opengl.GL11;
 import org.spout.client.renderer.BatchVertexRenderer;
 import org.spout.client.renderer.vertexformat.PositionColor;
 
 public class PrimitiveBatch {
-	BatchVertexRenderer renderer;
+	Renderer renderer;
 	
 	public PrimitiveBatch(){
 		renderer = BatchVertexRenderer.constructNewBatch(GL11.GL_TRIANGLES);
 	}
 	
-	public BatchVertexRenderer getRenderer(){
+	public Renderer getRenderer(){
 		return renderer;
 	}
 	

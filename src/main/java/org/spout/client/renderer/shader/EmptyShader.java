@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
  * @author RoyAwesome
  *
  */
-public class EmptyShader extends Shader {
+public class EmptyShader extends ClientShader {
 
 	public EmptyShader()
 			throws FileNotFoundException {
