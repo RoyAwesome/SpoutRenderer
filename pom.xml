@@ -43,11 +43,6 @@
   		<artifactId>spoutapi</artifactId>
   		<version>dev-SNAPSHOT</version>
   	</dependency>
-  	<dependency>
-  		<groupId>slick</groupId>
-  		<artifactId>slick</artifactId>
-  		<version>274</version>
-  	</dependency>
   </dependencies>
 
   <build>

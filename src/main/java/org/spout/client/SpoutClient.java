@@ -6,8 +6,6 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.spout.client.batcher.PrimitiveBatch;
-import org.spout.client.renderer.BatchVertexRenderer;
-import org.spout.client.renderer.shader.BasicShader;
 import org.spout.client.renderer.shader.ClientShader;
 import org.spout.client.renderer.vertexformat.PositionColor;
 import org.spout.api.render.Shader;

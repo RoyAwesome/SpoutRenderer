@@ -3,8 +3,8 @@ package org.spout.client.renderer;
 import java.awt.geom.Rectangle2D;
 
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.opengl.Texture;
 import org.spout.api.render.Renderer;
+import org.spout.client.texture.Texture;
 
 
 public class SpriteBatch {
