@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
-import org.newdawn.slick.opengl.Texture;
 import org.spout.client.renderer.shader.variables.AttributeShaderVariable;
 import org.spout.client.renderer.shader.variables.ColorShaderVariable;
 import org.spout.client.renderer.shader.variables.FloatShaderVariable;
@@ -19,6 +18,7 @@ import org.spout.client.renderer.shader.variables.TextureSamplerShaderVariable;
 import org.spout.client.renderer.shader.variables.Vec2ShaderVariable;
 import org.spout.client.renderer.shader.variables.Vec3ShaderVariable;
 import org.spout.client.renderer.shader.variables.Vec4ShaderVariable;
+import org.spout.client.texture.Texture;
 import org.spout.api.math.*;
 import org.spout.api.render.Shader;
 import org.spout.api.util.Color;

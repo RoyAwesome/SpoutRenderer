@@ -6,8 +6,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 
-import gnu.trove.list.array.*;
-
 public class GL30BatchVertexRenderer extends BatchVertexRenderer {
 	final int SIZE_FLOAT = 4;
 	

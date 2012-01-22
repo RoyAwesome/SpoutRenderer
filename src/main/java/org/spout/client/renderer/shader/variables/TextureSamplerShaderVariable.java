@@ -3,7 +3,7 @@ package org.spout.client.renderer.shader.variables;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL30;
-import org.newdawn.slick.opengl.Texture;
+import org.spout.client.texture.Texture;
 
 public class TextureSamplerShaderVariable extends ShaderVariable {
 	int textureID;

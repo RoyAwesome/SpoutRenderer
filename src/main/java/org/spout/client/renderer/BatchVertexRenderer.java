@@ -1,6 +1,5 @@
 package org.spout.client.renderer;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import gnu.trove.list.array.*;
 
@@ -12,7 +11,6 @@ import org.spout.api.render.Shader;
 import org.spout.api.render.Renderer;
 import org.spout.api.util.Color;
 import org.spout.client.renderer.shader.EmptyShader;
-import org.newdawn.slick.opengl.Texture;
 
 
 public abstract class BatchVertexRenderer implements Renderer {
