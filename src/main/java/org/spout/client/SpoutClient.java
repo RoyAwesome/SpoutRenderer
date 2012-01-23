@@ -1,19 +1,56 @@
 package org.spout.client;
 
+import java.io.File;
+import java.net.SocketAddress;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Logger;
+
+import org.spout.api.Client;
+import org.spout.api.command.Command;
+import org.spout.api.command.CommandSource;
+import org.spout.api.command.RootCommand;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.EventManager;
+import org.spout.api.event.SimpleEventManager;
+import org.spout.api.generator.WorldGenerator;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Recipe;
 import org.spout.api.math.Matrix;
 import org.spout.api.math.Vector3;
+import org.jboss.netty.channel.Channel;
+import org.jboss.netty.channel.group.ChannelGroup;
+import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.spout.client.batcher.PrimitiveBatch;
 import org.spout.client.renderer.shader.ClientShader;
 import org.spout.client.renderer.vertexformat.PositionColor;
+import org.spout.api.player.Player;
+import org.spout.api.plugin.CommonPluginManager;
+import org.spout.api.plugin.Platform;
+import org.spout.api.plugin.Plugin;
+import org.spout.api.plugin.PluginManager;
+import org.spout.api.plugin.PluginStore;
+import org.spout.api.plugin.security.CommonSecurityManager;
+import org.spout.api.protocol.Session;
+import org.spout.api.protocol.SessionRegistry;
+import org.spout.api.protocol.bootstrap.BootstrapProtocol;
 import org.spout.api.render.Shader;
+import org.spout.api.scheduler.Scheduler;
 import org.spout.api.util.Color;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class SpoutClient {
+public class SpoutClient implements Client {
 	
 	public void start() throws InterruptedException {
 		try {
@@ -108,5 +145,333 @@ public class SpoutClient {
 	public static void main(String[] argv) throws InterruptedException {
 		SpoutClient displayExample = new SpoutClient();
 		displayExample.start();
+	}
+
+	private volatile int maxPlayers = 20;
+
+	private volatile String primaryAddress = "localhost";
+
+	private volatile String[] allAddresses;
+
+	private File pluginDirectory = new File("plugins");
+
+	private File configDirectory = new File("config");
+
+	private File updateDirectory = new File("update");
+
+	private String logFile = "logs/log-%D.txt";
+
+	private String name = "Spout Server";
+	/**
+	 * Default world generator
+	 */
+	private WorldGenerator defaultGenerator = null;
+
+		/**
+	 * The security manager
+	 * TODO - need to integrate this
+	 */
+	private CommonSecurityManager securityManager = new CommonSecurityManager(0);
+
+	/**
+	 * The plugin manager for the server
+	 */
+	private CommonPluginManager pluginManager = new CommonPluginManager(this, securityManager, 0.0);
+/**
+	 * The logger for this class.
+	 */
+	public static final Logger logger = Logger.getLogger("Minecraft");
+
+	/**
+	 * A group containing all of the channels.
+	 */
+	private final ChannelGroup group = new DefaultChannelGroup();
+
+	/**
+	 * The network executor service - Netty dispatches events to this thread
+	 * pool.
+	 */
+	private final ExecutorService executor = Executors.newCachedThreadPool();
+
+	/**
+	 * If the server has a whitelist or not.
+	 */
+	private volatile boolean whitelist = false;
+
+	/**
+	 * If the server allows flight.
+	 */
+	private volatile boolean allowFlight = false;
+
+	/**
+	 * A list of all players who can log onto this server, if using a whitelist.
+	 */
+	private List<String> whitelistedPlayers = new ArrayList<String>();
+	
+	/**
+	 * A list of all players who can not log onto this server.
+	 */
+	private List<String> bannedPlayers = new ArrayList<String>();
+	
+	/**
+	 * A list of all operators.
+	 */
+	private List<String> operators = new ArrayList<String>();
+	
+	/**
+	 * A folder that holds all of the world data folders inside of it. By default, it does not exist ('.'), meant for organizational purposes.
+	 */
+	private File worldFolder = new File(".");
+
+	/**
+	 * The root commnd for this server.
+	 */
+	private final RootCommand rootCommand = new RootCommand(this);
+
+	/**
+	 * The event manager.
+	 */
+	private final EventManager eventManager = new SimpleEventManager();
+	
+	private final ConcurrentMap<SocketAddress, BootstrapProtocol> bootstrapProtocols = new ConcurrentHashMap<SocketAddress, BootstrapProtocol>();
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public String getVersion() {
+		return getClass().getPackage().getImplementationVersion();
+	}
+
+	public List<String> getAllPlayers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Player[] getOnlinePlayers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getMaxPlayers() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public String getAddress() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String[] getAllAddresses() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void broadcastMessage(String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public PluginManager getPluginManager() {
+		return pluginManager;
+	}
+
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public void processCommand(CommandSource source, String commandLine) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public File getUpdateFolder() {
+		return updateDirectory;
+	}
+
+	public File getConfigFolder() {
+		return configDirectory;
+	}
+
+	public Player getPlayer(String name, boolean exact) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<Player> matchPlayer(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public World getWorld(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public World getWorld(UUID uid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<World> getWorlds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public World loadWorld(String name, WorldGenerator generator) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void save(boolean worlds, boolean players) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public File getWorldFolder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Command getRootCommand() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public EventManager getEventManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Platform getPlatform() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Session newSession(Channel channel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ChannelGroup getChannelGroup() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public SessionRegistry getSessionRegistry() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public WorldGenerator getDefaultGenerator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setDefaultGenerator(WorldGenerator generator) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Scheduler getScheduler() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addRecipe(Recipe recipe) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Recipe getRecipe(Plugin plugin, String recipe) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Recipe removeRecipe(Plugin plugin, String recipe) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public BootstrapProtocol getBootstrapProtocol(SocketAddress address) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public File getAddonFolder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public File getAudioCache() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public File getTemporaryCache() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public File getTextureCache() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public File getTexturePackFolder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public File getSelectedTexturePackZip() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public File getStatsFolder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Entity getActivePlayer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public World getWorld() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Point getCamera() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setCamera(Point loc) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void detachCamera(boolean detach) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isCameraDetached() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public PluginStore getAddonStore() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
