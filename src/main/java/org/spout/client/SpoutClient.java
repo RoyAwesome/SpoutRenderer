@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.RootCommand;
@@ -144,6 +145,7 @@ public class SpoutClient implements Client {
 
 	public static void main(String[] argv) throws InterruptedException {
 		SpoutClient displayExample = new SpoutClient();
+		Spout.setGame(displayExample);
 		displayExample.start();
 	}
 
