@@ -156,7 +156,11 @@ public class SpoutClient implements Client {
 			long dt = System.currentTimeMillis() - time;
 			//run at 60fps
 			if(dt < 16) Thread.sleep(16 - dt);
-		
+			if(ticks % 100 == 0){
+				long total = System.currentTimeMillis() - time;
+				System.out.println("fps: " + (1.0/total) * 1000);
+			}
+			
 			
 		}
 
