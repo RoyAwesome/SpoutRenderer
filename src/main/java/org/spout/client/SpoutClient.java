@@ -32,6 +32,8 @@ import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 import org.spout.client.batcher.PrimitiveBatch;
 import org.spout.client.renderer.shader.BasicShader;
 import org.spout.client.renderer.shader.ClientShader;
@@ -54,12 +56,25 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SpoutClient implements Client {
 	
+	public static boolean glInfo = true;
+	
 	public void start() throws InterruptedException {
 		try {
 			Display.setDisplayMode(new DisplayMode(800,600));
 			
 			Display.create();
 
+			if(glInfo){
+				
+				System.out.println("OpenGL Information");
+				System.out.println(GL11.glGetString(GL11.GL_VENDOR));
+				System.out.println(GL11.glGetString(GL11.GL_RENDER));
+				System.out.println(GL11.glGetString(GL11.GL_VERSION));
+				System.out.println(GL11.glGetString(GL20.GL_SHADING_LANGUAGE_VERSION));
+				System.out.println(GL11.glGetString(GL11.GL_EXTENSIONS));
+		
+			}
+			
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -148,7 +163,9 @@ public class SpoutClient implements Client {
 		Display.destroy();
 	}
 
-	public static void main(String[] argv) throws InterruptedException {
+	public static void main(String[] argv) throws InterruptedException, LWJGLException {
+		
+		
 		SpoutClient displayExample = new SpoutClient();
 		Spout.setGame(displayExample);
 		displayExample.start();

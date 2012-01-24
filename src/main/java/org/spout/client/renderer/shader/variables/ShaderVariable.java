@@ -12,7 +12,7 @@ public abstract class ShaderVariable {
 	int location;
 	@SuppressWarnings("unused")
 	public ShaderVariable(int program, String name){
-		if(BatchVertexRenderer.GLMode == BatchModes.GL11) return;
+		if(BatchVertexRenderer.GLMode == BatchModes.GL11) return;  //Shaders don't exist in OpenGL 1.1
 		this.program = program;
 		GL20.glUseProgram(program);
 		//If we are an attribute, we aren't a uniform.  Don't continue
