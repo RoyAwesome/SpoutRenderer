@@ -1,6 +1,8 @@
 package org.spout.client.renderer.shader.variables;
 
 import org.lwjgl.opengl.GL20;
+import org.spout.client.renderer.BatchModes;
+import org.spout.client.renderer.BatchVertexRenderer;
 import org.spout.client.renderer.shader.ShaderVariableNotFoundException;
 
 public abstract class ShaderVariable {
@@ -10,6 +12,7 @@ public abstract class ShaderVariable {
 	int location;
 	@SuppressWarnings("unused")
 	public ShaderVariable(int program, String name){
+		if(BatchVertexRenderer.GLMode == BatchModes.GL11) return;
 		this.program = program;
 		GL20.glUseProgram(program);
 		//If we are an attribute, we aren't a uniform.  Don't continue

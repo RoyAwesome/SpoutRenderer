@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.spout.client.renderer.BatchModes;
+import org.spout.client.renderer.BatchVertexRenderer;
 import org.spout.client.renderer.shader.variables.AttributeShaderVariable;
 import org.spout.client.renderer.shader.variables.ColorShaderVariable;
 import org.spout.client.renderer.shader.variables.FloatShaderVariable;
@@ -41,7 +43,7 @@ public class ClientShader implements Shader {
 	
 	
 	public ClientShader(String vertexShader, String fragmentShader){
-
+		if(BatchVertexRenderer.GLMode == BatchModes.GL11) return;
 		System.out.println("Compiling "+ vertexShader + " and " + fragmentShader);
 		//Create a new Shader object on the GPU
 		program = GL20.glCreateProgram();

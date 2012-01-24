@@ -111,7 +111,11 @@ public class SpoutClient implements Client {
 			
 			Matrix view = Matrix.createLookAt(new Vector3(x,y,z), Vector3.ZERO, Vector3.Up);
 			
-			shader.setUniform("View", view);		
+			if(shader instanceof BasicShader){
+				((BasicShader) shader).setViewMatrix(view);
+			}else{
+				shader.setUniform("View", view);		
+			}
 			batch.getRenderer().setShader(shader);
 			
 		
