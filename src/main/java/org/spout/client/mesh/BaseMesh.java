@@ -3,7 +3,7 @@ package org.spout.client.mesh;
 import java.util.ArrayList;
 
 import org.spout.client.renderer.vertexformat.*;
-import org.spout.api.model.renderer.RenderEffect;
+import org.spout.api.render.RenderEffect;
 import org.spout.api.render.Renderer;
 
 public abstract class BaseMesh {
@@ -26,13 +26,13 @@ public abstract class BaseMesh {
 	
 	private void preBatch(Renderer batcher){
 		for(RenderEffect effect : effects){
-			effect.preBatch();
+			effect.preBatch(batcher);
 		}
 	}
 	
 	private void postBatch(Renderer batcher){
 		for(RenderEffect effect: effects){
-			effect.postBatch();
+			effect.postBatch(batcher);
 		}
 		
 	}
@@ -47,12 +47,12 @@ public abstract class BaseMesh {
 	
 	private void preRender(Renderer batcher){
 		for(RenderEffect effect : effects){
-			effect.preDraw();
+			effect.preDraw(batcher);
 		}
 	}
 	private void postRender(Renderer batcher){
 		for(RenderEffect effect : effects){
-			effect.postDraw();
+			effect.postDraw(batcher);
 		}		
 	}
 	

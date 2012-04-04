@@ -1,4 +1,5 @@
 package org.spout.client.renderer;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 
 import gnu.trove.list.array.*;
@@ -9,7 +10,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector4;
 import org.spout.api.render.Shader;
 import org.spout.api.render.Renderer;
-import org.spout.api.util.Color;
 import org.spout.client.renderer.shader.EmptyShader;
 
 
@@ -196,11 +196,16 @@ public abstract class BatchVertexRenderer implements Renderer {
 		colorBuffer.add(b);
 		colorBuffer.add(a);
 	}
+	
+	public void addColor(int r, int g, int b, int a){
+		addColor(r/255.0f, g/255.0f, b/255.0f, a/255.0f);
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.spout.client.renderer.Renderer#addColor(org.spout.api.util.Color)
 	 */
 	public void addColor(Color color){
-		addColor(color.getRedF(), color.getGreenF(), color.getBlueF(), color.getAlphaF());
+		addColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}
 	
 	/* (non-Javadoc)

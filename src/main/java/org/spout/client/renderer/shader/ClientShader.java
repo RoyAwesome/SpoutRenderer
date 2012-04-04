@@ -1,5 +1,6 @@
 package org.spout.client.renderer.shader;
 
+import java.awt.Color;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -23,7 +24,7 @@ import org.spout.client.renderer.shader.variables.Vec4ShaderVariable;
 import org.spout.client.texture.Texture;
 import org.spout.api.math.*;
 import org.spout.api.render.Shader;
-import org.spout.api.util.Color;
+
 
 
 

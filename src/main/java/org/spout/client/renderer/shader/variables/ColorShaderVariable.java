@@ -1,7 +1,8 @@
 package org.spout.client.renderer.shader.variables;
 
+import java.awt.Color;
+
 import org.lwjgl.opengl.GL20;
-import org.spout.api.util.Color;
 
 public class ColorShaderVariable extends ShaderVariable {
 	
@@ -14,7 +15,7 @@ public class ColorShaderVariable extends ShaderVariable {
 
 	@Override
 	public void assign() {
-		GL20.glUniform4f(this.location, value.getRedF(), value.getGreenF(), value.getBlueF(), value.getAlphaF());
+		GL20.glUniform4f(this.location, value.getRed() / 255.0f, value.getGreen() / 255.0f, value.getBlue() / 255.0f, value.getAlpha() / 255.0f);
 
 	}
 
